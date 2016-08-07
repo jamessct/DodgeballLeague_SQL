@@ -15,6 +15,13 @@ class Team
     @id = team['id'].to_i
   end
 
+  def delete()
+    db = PG.connect( { dbname: 'dodgeball_league', host: 'localhost'} ) 
+    sql = "DELETE FROM team WHERE id = #{id};"
+    db.exec( sql )
+    db.close()
+  end
+
   def self.all
     sql = "SELECT * FROM team;"
     team = SqlRunner.run(sql)
@@ -27,10 +34,9 @@ class Team
     SqlRunner.run(sql)
   end
 
-  def match
-    sql = "SELECT * FROM match WHERE home_team_id OR away_team_id = #{id};"
-    match = SqlRunner.run( sql )
-    result = match.map { |match| Match.new( match ) }
-    return result
+  def matches #NOT WORKING :(
+    sql = "SELECT * FROM match WHERE (#{@home_team_id}) = id OR (#{@away_team_id}) = id;"
+    matches = SqlRunner.run( sql )
+    return matches
   end
 end

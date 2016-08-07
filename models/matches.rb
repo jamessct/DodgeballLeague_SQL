@@ -31,15 +31,14 @@ class Match
     SqlRunner.run(sql)
   end
 
-  # def team()
-  #   sql = "SELECT * FROM team WHERE id = #{@home_team_id} OR id = #{away_team_id};"
-  #   team = SqlRunner.run( sql )
-  #   team = Team.new(team)
-  #   return team
-  # end
+  def teams()
+    sql = "SELECT * FROM team WHERE id = (#{@home_team_id}) OR id = (#{away_team_id});"
+    teams = SqlRunner.run( sql )
+    return teams
+  end
 
   def home_team()
-    sql = "SELECT * FROM team WHERE (#{@home_team_id} = id;"
+    sql = "SELECT * FROM team WHERE (#{@home_team_id}) = id;"
     home_team = SqlRunner.run(sql).first
     return home_team['name']
   end
