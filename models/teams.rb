@@ -34,8 +34,8 @@ class Team
     SqlRunner.run(sql)
   end
 
-  def matches #NOT WORKING :(
-    sql = "SELECT * FROM match WHERE (#{@home_team_id}) = id OR (#{@away_team_id}) = id;"
+  def matches 
+    sql = "SELECT * FROM match WHERE home_team_id = (#{@id}) OR away_team_id = (#{id});"
     matches = SqlRunner.run( sql )
     return matches
   end
